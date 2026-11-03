@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Далия Коноплёва — графический дизайнер. Экспериментирую с графикой, типографикой и смыслами, чтобы делать дизайн, который чувствуется.">
+<meta property="og:title" content="yadalya — Далия Коноплёва">
+<meta property="og:description" content="Графический дизайнер. Портфолио.">
+<meta property="og:image" content="v/s1.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23222'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial' font-size='22' fill='%23fff' text-anchor='middle'%3Ey%3C/text%3E%3C/svg%3E">
+<title>yadalya — Далия Коноплёва</title>
+<style>
+/* Layout: one fixed 1920×1197 stage (Figma frame units) scaled to cover the viewport; scroll drives the videos */
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --ink-soft: #222222;
+  --ink-muted: rgba(0, 0, 0, 0.28);
+  --btn-fg: #eaf4fd;
+  --font: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --fade: 700ms;
+  color-scheme: light;
+}
+html, body { background: var(--paper); color: var(--ink); }
+body { margin: 0; font-family: var(--font); -webkit-font-smoothing: antialiased; }
+
+/* scroll track: only provides scroll distance */
+#track { position: relative; width: 1px; pointer-events: none; }
+
+#viewport { position: fixed; inset: 0; overflow: hidden; background: var(--paper); }
+#stage, #ui { position: absolute; left: 0; top: 0; width: 1920px; height: 1197px; transform-origin: 0 0; }
+#stage video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; /* keeps native proportions, never stretched */
+  opacity: 0; background: transparent;
+}
+#stage video.on { opacity: 1; }
+#hero { position: absolute; inset: 0; z-index: 100000; pointer-events: none; will-change: opacity; }
+#hero img { position: absolute; display: block; max-width: none; }
+/* positions from the Figma frame, nudged 2px up to sit exactly on the first video frame */
+#hero-yad { left: 90px; top: 248.6px; width: 1737.4px; height: 546.4px; }
+#hero-img { left: 157px; top: 27.8px; width: 1606px; height: 1171px; }
+#stage video.fading { transition: opacity var(--fade) ease; }
+
+/* ---------- overlay type (all values from Figma) ---------- */
+.t {
+  position: absolute; margin: 0;
+  font-size: 24.604px; line-height: 1.093; letter-spacing: -1.7223px;
+  text-transform: lowercase; color: var(--ink);
+}
+.just { text-align: justify; }
+/* Figma line breaks kept exactly; every line but the last is justified, as in the mockup */
+.lines > span { display: block; white-space: nowrap; text-align: justify; text-align-last: justify; }
+.lines > span:last-child { text-align-last: left; }
+#p-next .lines > span { text-align-last: left; }
+
+#hdr-name { left: 90px; top: 61px; letter-spacing: -1.12px; white-space: pre; }
+#hdr-name span { color: var(--ink-muted); }
+.navlink {
+  position: absolute; top: 61px; transform: translateX(-100%);
+  font: inherit; font-size: 24.604px; line-height: 1.093; letter-spacing: -1.7223px;
+  text-transform: lowercase; color: var(--ink); text-decoration: none; white-space: nowrap;
+  transition: opacity .25s ease; cursor: pointer;
+}
+.navlink:hover { opacity: .45; }
+#nav-portfolio { left: 1312px; }
+#nav-contacts { left: 1499px; }
+#cta {
+  position: absolute; left: 1592px; top: 46px; display: flex; align-items: center; justify-content: center;
+  padding: 15px 22px; background: var(--ink-soft); color: var(--btn-fg); text-decoration: none;
+  font-size: 24.604px; line-height: 1.093; letter-spacing: -1.7223px; text-transform: lowercase; white-space: nowrap;
+  transition: background .25s ease;
+}
+#cta:hover { background: var(--ink); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
+
+.group { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity var(--fade) ease, visibility 0s linear var(--fade); }
+.group.show { opacity: 1; visibility: visible; transition: opacity var(--fade) ease, visibility 0s; }
+.group > * { pointer-events: auto; }
+#ui { pointer-events: none; }
+#ui a, #ui button { pointer-events: auto; }
+
+/* frame 1 */
+#g-f1 { transition: none; will-change: transform; }
+#f1-arrow { position: absolute; left: 1462px; top: 818px; width: 20px; height: 30px; }
+#f1-text { left: 1462px; top: 877px; width: 367px; }
+
+/* frames 2–4 */
+#p-desc { position: absolute; left: 90px; top: 427px; width: 296px; height: 120px; }
+#p-desc .t { left: 0; top: 0; width: 296px; transition: opacity var(--fade) ease; }
+#p-next {
+  position: absolute; left: 1592px; top: 425px; padding: 0; margin: 0; border: 0; background: none;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 15px; cursor: pointer; color: var(--ink-soft);
+  font: inherit; text-align: left;
+}
+#p-next svg { width: 26px; height: 20px; display: block; transition: transform 600ms cubic-bezier(.6,0,.2,1); }
+#p-next.back svg { transform: rotate(180deg); }
+#p-next .lbl { position: relative; width: 147px; height: 54px; }
+#p-next .lbl .t { left: 0; top: 0; width: 147px; color: var(--ink-soft); transition: opacity var(--fade) ease; }
+#p-next:hover .lbl, #p-next:hover svg { opacity: .55; }
+
+.fade-out { opacity: 0 !important; }
+
+/* loading veil, only until the first frame is ready */
+#veil { position: fixed; inset: 0; background: var(--paper); transition: opacity .6s ease; z-index: 5; pointer-events: none; }
+#veil.gone { opacity: 0; }
+
+/* ---------- narrow screens: UI leaves the stage and uses the viewport ---------- */
+@media (max-width: 820px) {
+  #ui { width: 100%; height: 100%; transform: none !important; }
+  .t, .navlink, #cta { font-size: 14px; letter-spacing: -0.6px; }
+  #hdr-name { left: max(16px, env(safe-area-inset-left, 0px)); top: calc(18px + env(safe-area-inset-top, 0px)); letter-spacing: -0.4px; white-space: normal; width: 140px; }
+  #hdr-name span { display: block; }
+  #nav-portfolio, #nav-contacts { display: none; }
+  #cta { left: auto; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(14px + env(safe-area-inset-top, 0px)); padding: 9px 12px; }
+  #f1-arrow { left: max(16px, env(safe-area-inset-left, 0px)); top: auto; bottom: calc(118px + env(safe-area-inset-bottom, 0px)); width: 14px; height: 21px; }
+  #f1-text { left: max(16px, env(safe-area-inset-left, 0px)); top: auto; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); width: min(260px, calc(100% - 32px)); }
+  #p-desc { left: max(16px, env(safe-area-inset-left, 0px)); top: auto; bottom: calc(40px + env(safe-area-inset-bottom, 0px)); width: 190px; height: 80px; }
+  #p-desc .t { width: 190px; }
+  #p-next { left: auto; right: max(16px, env(safe-area-inset-right, 0px)); top: auto; bottom: calc(52px + env(safe-area-inset-bottom, 0px)); gap: 8px; }
+  #p-next svg { width: 20px; height: 15px; }
+  #p-next .lbl { width: 100px; height: 34px; }
+  #p-next .lbl .t { width: 100px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --fade: 200ms; }
+}
+</style>
+</head>
+<body>
+<div id="viewport" aria-hidden="false">
+  <div id="stage">
+    <video id="v-s1" class="on" data-src="v/s1.mp4" poster="v/s1.jpg" muted playsinline preload="auto"></video>
+    <video id="v-p2" data-src="v/p2.mp4" muted playsinline loop preload="auto"></video>
+    <video id="v-p3" data-src="v/p3.mp4" muted playsinline loop preload="auto"></video>
+    <video id="v-s5" data-src="v/s5.mp4" muted playsinline preload="auto"></video>
+    <video id="v-s6" data-src="v/s6.mp4" muted playsinline preload="auto"></video>
+    <!-- opening still in full quality from the Figma frame; it hands over to video 1 as soon as scrolling starts -->
+    <div id="hero" aria-hidden="true">
+      <img id="hero-yad" src="v/yadalya.webp" alt="">
+      <img id="hero-img" src="v/hero.webp" alt="">
+    </div>
+  </div>
+
+  <div id="ui">
+    <header>
+      <p class="t" id="hdr-name">далия коноплёва    <span>графический дизайнер</span></p>
+      <a class="navlink" id="nav-portfolio" href="https://t.me/yadalya" target="_blank" rel="noopener">портфолио</a>
+      <a class="navlink" id="nav-contacts" href="https://t.me/yadalya" target="_blank" rel="noopener">контакты</a>
+      <a id="cta" href="https://t.me/yadalya" target="_blank" rel="noopener">обсудить проект→</a>
+    </header>
+
+    <section class="group show" id="g-f1" aria-label="о себе">
+      <svg id="f1-arrow" viewBox="0 0 20 30" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 1v27M2 20l8 8 8-8"/></svg>
+      <p class="t lines" id="f1-text"><span>экспериментирую с графикой,</span><span>типографикой и смыслами, чтобы</span><span>делать дизайн, который</span><span>чувствуется.</span></p>
+    </section>
+
+    <section class="group" id="g-proj" aria-label="кейсы">
+      <div id="p-desc" aria-live="polite"><p class="t lines"><span>voltе́ design — свет, который</span><span>формирует пространство,</span><span>создан для выразительных</span><span>интерьеров.</span></p></div>
+      <button id="p-next" type="button" aria-label="следующий кейс">
+        <svg viewBox="0 0 26 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M0 10h24M16 2l8 8-8 8"/></svg>
+        <span class="lbl"><span class="t lines"><span>следующий</span><span>кейс</span></span></span>
+      </button>
+    </section>
+  </div>
+</div>
+<div id="veil"></div>
+<div id="track"></div>
+
+<script>
+(() => {
+  const W = 1920, H = 1197;
+  // scroll length of the opening animation, in viewport heights; the page ends on the first case
+  const LA = 2.6;
+
+  // content of frames 2, 3, 4 (texts from Figma)
+  const PROJECTS = [
+    { layer: 's1', desc: ['voltе́ design — свет, который', 'формирует пространство,', 'создан для выразительных', 'интерьеров.'] },
+    { layer: 'p2', desc: ['voltе́ design — свет, который', 'формирует пространство,', 'создан для выразительных', 'интерьеров.'] },
+    { layer: 'p3', desc: ['voltе́ design — свет, который', 'формирует пространство,', 'создан для выразительных', 'интерьеров.'] },
+  ];
+  const NEXT_LABEL = ['следующий', 'кейс'], BACK_LABEL = ['к первому', 'кейсу'];
+
+  const $ = (s) => document.querySelector(s);
+  const V = { s1: $('#v-s1'), p2: $('#v-p2'), p3: $('#v-p3'), s5: $('#v-s5'), s6: $('#v-s6') };
+  const stage = $('#stage'), ui = $('#ui'), track = $('#track');
+  const gF1 = $('#g-f1'), gProj = $('#g-proj');
+  const pDesc = $('#p-desc'), pNext = $('#p-next'), pLbl = pNext.querySelector('.lbl');
+  const FADE = matchMedia('(prefers-reduced-motion: reduce)').matches ? 200 : 700;
+
+  let vw = 0, vh = 0;
+  function layout() {
+    vw = innerWidth; vh = innerHeight;
+    if (vw <= 820) {
+      // phones: whole frame visible, centred between header and captions
+      const s = vw / W;
+      stage.style.transform = `translate(0,${Math.max(80, (vh - H * s) / 2 - 30)}px) scale(${s})`;
+    } else {
+      const s = Math.max(vw / W, vh / H);
+      stage.style.transform = `translate(${(vw - W * s) / 2}px,0) scale(${s})`;
+    }
+    const s = Math.max(vw / W, vh / H);
+    // UI never gets cropped: it uses the stage scale unless that would push text off-screen
+    const su = Math.min(s, vw / W);
+    ui.style.transform = `translate(${(vw - W * su) / 2}px,0) scale(${su})`;
+    track.style.height = (LA * vh + vh) + 'px';
+  }
+  addEventListener('resize', () => { layout(); tick(); });
+  layout();
+
+  /* ---------- layers: new layer always fades in ON TOP of the old one (no white/black flash) ---------- */
+  let z = 1, top = 's1';
+  V.s1.style.zIndex = z;
+  function setLayer(name, instant) {
+    if (name === top) return;
+    const el = V[name];
+    el.classList.remove('fading', 'on');
+    el.style.zIndex = ++z;
+    void el.offsetWidth;
+    if (!instant) el.classList.add('fading');
+    el.classList.add('on');
+    const prev = V[top];
+    top = name;
+    if (name === 'p2' || name === 'p3') { el.currentTime = 0; el.play().catch(() => {}); }
+    clearTimeout(setLayer.t);
+    setLayer.t = setTimeout(() => {
+      // once the new layer is fully opaque, hide every other one: the picture never depends on
+      // z-index stacking alone (some browsers keep painting a video above after its z-index drops)
+      for (const k in V) {
+        if (k === top) { V[k].classList.remove('fading'); continue; }
+        V[k].classList.remove('on', 'fading');
+        if (k === 'p2' || k === 'p3') V[k].pause();
+      }
+    }, FADE + 50);
+  }
+
+  /* ---------- scroll-scrubbed videos ---------- */
+  function scrubber(v) {
+    return { v, target: 0, cur: 0, active: false,
+      step() {
+        const d = v.duration; if (!d) return;
+        const goal = Math.min(this.target, d - 0.04);
+        const diff = goal - this.cur;
+        this.cur = Math.abs(diff) < 0.004 ? goal : this.cur + diff * 0.16;
+        if (!v.seeking && Math.abs(v.currentTime - this.cur) > 0.012) v.currentTime = this.cur;
+      } };
+  }
+  const S1 = scrubber(V.s1);
+
+  /* ---------- projects ---------- */
+  let proj = 0;
+  function swapText(container, text) {
+    const old = container.querySelector('.t:not(.leaving)');
+    if (old && old.textContent === text.join('')) return;
+    const nu = old.cloneNode(false);
+    for (const line of text) { const sp = document.createElement('span'); sp.textContent = line; nu.appendChild(sp); }
+    nu.style.opacity = 0;
+    container.appendChild(nu);
+    void nu.offsetWidth;
+    nu.style.opacity = 1;
+    old.classList.add('leaving'); old.style.opacity = 0;
+    setTimeout(() => old.remove(), FADE + 30);
+  }
+  function showProject(i) {
+    proj = (i + PROJECTS.length) % PROJECTS.length;
+    // video and text change in the same frame, with the same duration
+    setLayer(PROJECTS[proj].layer);
+    swapText(pDesc, PROJECTS[proj].desc);
+    const last = proj === PROJECTS.length - 1;
+    pNext.classList.toggle('back', last);
+    pNext.setAttribute('aria-label', (last ? BACK_LABEL : NEXT_LABEL).join(' '));
+    swapText(pLbl, last ? BACK_LABEL : NEXT_LABEL);
+  }
+  pNext.addEventListener('click', () => showProject(proj === PROJECTS.length - 1 ? 0 : proj + 1));
+  addEventListener('keydown', (e) => {
+    if (section !== 'B' || finalOn) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); showProject(proj + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showProject(proj - 1); }
+  });
+
+  /* ---------- contacts scene (menu): video 5 plays, video 6 fades in over its last frame, then 6 → 5 → 6 … ---------- */
+  let finalOn = false;
+  function playFrom(name, fade) {
+    const v = V[name];
+    const go = () => { if (!finalOn) return; setLayer(name, !fade); v.play().catch(() => {}); };
+    v.pause();
+    if (v.currentTime < 0.02 && v.readyState >= 2) go();
+    else { v.addEventListener('seeked', go, { once: true }); v.currentTime = 0; }
+  }
+  // video 5 ends on the same picture video 6 starts with; the old layer stays underneath, so nothing flashes
+  V.s5.addEventListener('ended', () => { if (finalOn) playFrom('s6', true); });
+  V.s6.addEventListener('ended', () => { if (finalOn) playFrom('s5', false); });
+  function startFinal() {
+    if (finalOn) return;
+    finalOn = true;
+    gF1.style.opacity = 0; gF1.style.visibility = 'hidden'; hero.style.opacity = 0; gProj.classList.remove('show');
+    playFrom('s5', true);
+  }
+  function stopFinal() {
+    if (!finalOn) return;
+    finalOn = false;
+    V.s5.pause(); V.s6.pause();
+    setLayer(section === 'A' ? 's1' : PROJECTS[proj].layer);
+  }
+
+  /* ---------- section state: A = opening animation (scroll), B = cases (button only) ---------- */
+  let section = '';
+  const maxY = () => LA * vh;
+  function sectionOf(y) {
+    const a = maxY();
+    if (y < a - 2) return ['A', y / a];
+    return ['B', 1];
+  }
+  function enter(sec) {
+    section = sec;
+    if (finalOn) { if (sec === 'A') stopFinal(); return; }
+    setLayer(sec === 'A' ? 's1' : PROJECTS[proj].layer);
+  }
+
+  // the caption rides along with the camera move of video 1 (offsets measured from the footage, video px per frame)
+  const TRACK = [[34, 0, 0], [35, 5, 0], [36, 11, -1], [37, 19, -2], [38, 28, -4], [39, 38, -5], [40, 38, -5],
+    [41, 49, -7], [42, 62, -9], [43, 77, -12], [44, 77, -12], [45, 93, -14], [46, 112, -18], [47, 134, -20],
+    [48, 158, -25], [49, 158, -25], [50, 181, -28], [51, 220, -33], [52, 262, -38], [53, 310, -43],
+    [54, 360, -48], [55, 420, -53], [56, 480, -58]];
+  const PX = W / 1732; // video px -> stage units
+  function offsetAt(f) {
+    if (f <= TRACK[0][0]) return [0, 0];
+    for (let i = 1; i < TRACK.length; i++) {
+      if (f <= TRACK[i][0]) {
+        const [f0, x0, y0] = TRACK[i - 1], [f1, x1, y1] = TRACK[i], k = (f - f0) / (f1 - f0);
+        return [x0 + (x1 - x0) * k, y0 + (y1 - y0) * k];
+      }
+    }
+    return [TRACK[TRACK.length - 1][1], TRACK[TRACK.length - 1][2]];
+  }
+  // follow the frame actually on screen (updated when a seek lands), not the requested one
+  let shownT = 0;
+  V.s1.addEventListener('seeked', () => { shownT = V.s1.currentTime; });
+  const hero = $('#hero');
+  function placeCaption(active) {
+    hero.style.opacity = active ? Math.max(0, 1 - shownT / 0.35).toFixed(3) : 0;
+    const f = shownT * 30;
+    const [x, y] = offsetAt(f);
+    const v = Math.abs(offsetAt(f + 1)[0] - x) * PX;
+    gF1.style.transform = `translate(${x * PX}px,${y * PX}px)`;
+    gF1.style.filter = v > 1 ? `blur(${Math.min(v * 0.1, 4).toFixed(2)}px)` : 'none';
+    gF1.style.opacity = active ? Math.max(0, Math.min(1, (56 - f) / 4)) : 0;
+    gF1.style.visibility = active && f < 56 ? 'visible' : 'hidden';
+  }
+
+  function tick() {
+    const [sec, p] = sectionOf(scrollY);
+    if (sec !== section) enter(sec);
+    S1.target = sec === 'A' ? p * (V.s1.duration || 4.875) : 99; // B holds the last frame (case 1 lives on it)
+    if (finalOn) return;
+    placeCaption(sec === 'A');
+    gProj.classList.toggle('show', (sec === 'A' && p > 0.7) || sec === 'B');
+  }
+
+  function loop() {
+    tick();
+    S1.step();
+    requestAnimationFrame(loop);
+  }
+
+  /* ---------- menu: all three items open Telegram @yadalya (plain links, no script) ---------- */
+
+  /* ---------- start ---------- */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const ready = () => $('#veil').classList.add('gone');
+  V.s1.addEventListener('loadeddata', ready, { once: true });
+  setTimeout(ready, 2500);
+  // videos are loaded whole into memory: scrubbing then works frame-accurately on any host
+  // (servers without byte-range support would otherwise make them unseekable)
+  const load = (k) => fetch(V[k].dataset.src)
+    .then((r) => { if (!r.ok) throw 0; return r.blob(); })
+    .then((b) => { V[k].src = URL.createObjectURL(b); })
+    .catch(() => { V[k].src = V[k].dataset.src; });
+  load('s1').then(() => Promise.all(['p2', 'p3'].map(load)));
+  tick();
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
